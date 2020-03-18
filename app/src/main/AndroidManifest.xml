@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -14,9 +15,7 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".MusicService"
-            android:description="@string/app_name"
-            android:enabled="true"
-            android:label="Notification" />
+            android:enabled="true" />
         <receiver android:name="AlarmReceiver">
             <intent-filter>
                 <action android:name="REFRESH_THIS" />
