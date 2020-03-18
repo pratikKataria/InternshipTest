@@ -2,6 +2,7 @@ package com.tricky__tweaks.internshiptest;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -13,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,6 +67,23 @@ public class MainActivity extends AppCompatActivity {
             if (fileUri != null) {
                 Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
                 Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
+
+                //if uri is not null we need to play it via media player
+
+                MediaPlayer mp = new MediaPlayer();
+                try {
+                    mp.setDataSource(MainActivity.this, fileUri);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    mp.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mp.start();
             }
         }
 
