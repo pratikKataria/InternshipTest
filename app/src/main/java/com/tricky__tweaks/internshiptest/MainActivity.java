@@ -28,19 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-        playBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "playing..", Toast.LENGTH_LONG).show();
-            }
-        });
+        playBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "playing..", Toast.LENGTH_LONG).show());
 
-        pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "pause", Toast.LENGTH_SHORT).show();
-            }
-        });
+        pauseBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "pause", Toast.LENGTH_SHORT).show());
 
     }
 }
