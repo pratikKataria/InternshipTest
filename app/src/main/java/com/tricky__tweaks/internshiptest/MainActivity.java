@@ -1,7 +1,5 @@
 package com.tricky__tweaks.internshiptest;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -9,18 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.OpenableColumns;
-import android.util.Log;
-import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import com.google.android.material.button.MaterialButton;
 
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,17 +64,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PICK_MUSIC_FILE && resultCode == RESULT_OK && data != null) {
             fileUri = data.getData();
             if (fileUri != null) {
-
-                String alarm = Context.ALARM_SERVICE;
-                AlarmManager am = (AlarmManager) getSystemService(alarm);
-
-                Intent intent = new Intent("REFRESH_THIS");
-                PendingIntent pi = PendingIntent.getBroadcast(this, 123456789, intent, 0);
-
-                int type = AlarmManager.RTC_WAKEUP;
-                long interval = 1000 * 50;
-
-                am.setInexactRepeating(type, System.currentTimeMillis(), interval, pi);
 
 
 //                Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
