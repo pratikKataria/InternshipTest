@@ -1,5 +1,7 @@
 package com.tricky__tweaks.internshiptest;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,30 +71,43 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PICK_MUSIC_FILE && resultCode == RESULT_OK && data != null) {
             fileUri = data.getData();
             if (fileUri != null) {
-                Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
-                Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
 
-                textViewFileName.setText(queryName(fileUri));
+                String alarm = Context.ALARM_SERVICE;
+                AlarmManager am = (AlarmManager) getSystemService(alarm);
+
+                Intent intent = new Intent("REFRESH_THIS");
+                PendingIntent pi = PendingIntent.getBroadcast(this, 123456789, intent, 0);
+
+                int type = AlarmManager.RTC_WAKEUP;
+                long interval = 1000 * 50;
+
+                am.setInexactRepeating(type, System.currentTimeMillis(), interval, pi);
 
 
-                //if uri is not null we need to play it via media player
+//                Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
+//                Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
+//
+//                textViewFileName.setText(queryName(fileUri));
+//
+//
+//                //if uri is not null we need to play it via media player
+//
+////                MediaPlayer mp = new MediaPlayer();
+//                try {
+//                    mp.setDataSource(MainActivity.this, fileUri);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    mp.prepare();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                mp.start();
 
-//                MediaPlayer mp = new MediaPlayer();
-                try {
-                    mp.setDataSource(MainActivity.this, fileUri);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    mp.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mp.start();
-
-//                startService(new Intent(this, MusicService.class).putExtra("MUSIC_URI", fileUri.toString()));
+                startService(new Intent(this, MusicService.class).putExtra("MUSIC_URI", fileUri.toString()));
             }
         }
 

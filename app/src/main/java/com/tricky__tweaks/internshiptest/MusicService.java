@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,12 +20,13 @@ public class MusicService extends Service {
 
         String sUri = intent.getStringExtra("MUSIC_URI");
         uri = Uri.parse(sUri);
-        mp = MediaPlayer.create(this, uri);
+        mp = MediaPlayer.create(this, Settings.System.DEFAULT_RINGTONE_URI);
+        mp.setLooping(true);
         mp.start();
         Log.e("MUSIC SERVICE", uri.getPath()+" before");
 
         Toast.makeText(this, "service started and playing Music", Toast.LENGTH_SHORT).show();
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         //can be destroyed but want keep playing
     }
 

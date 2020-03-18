@@ -12,7 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".MusicService"></service>
+        <service
+            android:name=".MusicService"
+            android:description="@string/app_name"
+            android:enabled="true"
+            android:label="Notification" />
+        <receiver android:name="AlarmReceiver">
+            <intent-filter>
+                <action android:name="REFRESH_THIS" />
+            </intent-filter>
+        </receiver>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
