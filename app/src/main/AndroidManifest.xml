@@ -3,7 +3,6 @@
     package="com.tricky__tweaks.internshiptest">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
@@ -15,12 +14,9 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".MusicService"
-            android:enabled="true" />
-        <receiver android:name="AlarmReceiver">
-            <intent-filter>
-                <action android:name="REFRESH_THIS" />
-            </intent-filter>
-        </receiver>
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,17 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.button.MaterialButton;
+
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PICK_MUSIC_FILE = 1003;
-    MediaPlayer mp = new MediaPlayer();
     private TextView textViewFileName;
     private MaterialButton playBtn;
     private MaterialButton pauseBtn;
@@ -36,15 +40,28 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-        mp.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-
         playBtn.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "playing..", Toast.LENGTH_LONG).show();
             showFileChooser();
         });
 
-        pauseBtn.setOnClickListener(v -> Toast.makeText(MainActivity.this, "pause", Toast.LENGTH_SHORT).show());
+        pauseBtn.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "pause", Toast.LENGTH_SHORT).show();
+            stopService();
+        });
 
+    }
+
+    public void startService() {
+        Intent serviceIntent = new Intent(this, MusicService.class);
+        serviceIntent.putExtra("FILE_URI", fileUri.toString());
+
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, MusicService.class);
+        stopService(serviceIntent);
     }
 
     public void showFileChooser() {
@@ -65,29 +82,12 @@ public class MainActivity extends AppCompatActivity {
             fileUri = data.getData();
             if (fileUri != null) {
 
+                startService();
 
-//                Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
-//                Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
-//
-//                textViewFileName.setText(queryName(fileUri));
-//
-//
-//                //if uri is not null we need to play it via media player
-//
-////                MediaPlayer mp = new MediaPlayer();
-//                try {
-//                    mp.setDataSource(MainActivity.this, fileUri);
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    mp.prepare();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                mp.start();
+                Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath());
+                Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
+
+                textViewFileName.setText(queryName(fileUri));
 
                 startService(new Intent(this, MusicService.class).putExtra("MUSIC_URI", fileUri.toString()));
             }
