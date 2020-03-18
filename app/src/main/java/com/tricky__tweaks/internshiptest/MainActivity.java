@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,10 +21,10 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PICK_MUSIC_FILE = 1003;
+    MediaPlayer mp = new MediaPlayer();
     private TextView textViewFileName;
     private MaterialButton playBtn;
     private MaterialButton pauseBtn;
-
     private Uri fileUri;
 
     private void initViews() {
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        mp.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
         playBtn.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "playing..", Toast.LENGTH_LONG).show();
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //if uri is not null we need to play it via media player
 
-                MediaPlayer mp = new MediaPlayer();
+//                MediaPlayer mp = new MediaPlayer();
                 try {
                     mp.setDataSource(MainActivity.this, fileUri);
 
@@ -87,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 mp.start();
+
+//                startService(new Intent(this, MusicService.class).putExtra("MUSIC_URI", fileUri.toString()));
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     //This is code i found out on stack over flow to get the name of the file form uri
     private String queryName(Uri uri) {
