@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("$$$  MAIN_ACTIVITY $$$", fileUri.getPath().toString());
                 Log.e("$$$  MAIN_ACTIVITY $$$ -- file name", queryName(fileUri));
 
+                textViewFileName.setText(queryName(fileUri));
+
+
                 //if uri is not null we need to play it via media player
 
                 MediaPlayer mp = new MediaPlayer();
