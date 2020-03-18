@@ -17,6 +17,8 @@ import androidx.core.app.NotificationCompat;
 
 public class MusicService extends Service {
 
+    //final implemented only for local
+
     public static final String MUSIC_CHANNEL_ID = "foreground_music_channel";
 
     MediaPlayer mp;
