@@ -14,17 +14,20 @@
         android:fontFamily="monospace"/>
 
     <TextView
+        android:id="@+id/activity_main_tv_file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="\u2022"
         android:textSize="22dp"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_main_mb_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="play"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_main_mb_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
