@@ -44,7 +44,7 @@ public class MusicService extends Service {
 
             uri = Uri.parse(sUri);
 
-            mp = MediaPlayer.create(this, Settings.System.DEFAULT_RINGTONE_URI);
+            mp = MediaPlayer.create(this, uri);
 
             mp.setLooping(true);
 
